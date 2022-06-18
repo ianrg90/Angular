@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-servers',
+  //template can be passed like this:
+  //template: <app-server></app-server><app-server></app-server>
   templateUrl: './servers.component.html',
   styleUrls: ['./servers.component.css']
 })
