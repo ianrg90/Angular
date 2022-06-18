@@ -1,2 +1,54 @@
+<label for="server">Server Name</label>
+<!--<input
+    name="server"
+    type="text"
+    class="form-control"
+    (input)="getServerName($event)"
+  />-->
+
+<!--TWO WAY DATA BINDING-->
+<input
+  class="form-control"
+  type="text"
+  name="server"
+  [(ngModel)]="serverName"
+/>
+<p>{{ serverName }}</p>
+<button class="btn btn-primary" (click)="enableButton()">
+  Enable server creation
+</button>
+<!--Data binding with PROPERTY BINDING-->
+<button
+  class="btn btn-primary"
+  [disabled]="!allowAddServer"
+  (click)="addServer()"
+>
+  Add server
+</button>
+<!--<p [innerText]="allowAddServer"></p>-->
+<p>{{ serverCreationStatus }}</p>
 <app-server></app-server>
 <app-server></app-server>
+
+<h1>Challenge 2</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="username">Update username</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control"
+        [(ngModel)]="userName"
+      />
+      <p>{{ userName }}</p>
+      <button
+        class="btn btn-primary"
+        [disabled]="userName === ''"
+        (click)="userName = ''"
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+</div>
