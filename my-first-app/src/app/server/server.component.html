@@ -1,2 +1,2 @@
 <!--Data binding with STRING INTERPOLATION-->
-<p> {{'Server'}} with ID {{serverId}} is {{getServerStatus()}}</p>
+<p [ngStyle]="{color: getColor()}" [ngClass]="{online: serverStatus === 'online'}"> {{'Server'}} with ID {{serverId}} is {{getServerStatus()}}</p>
