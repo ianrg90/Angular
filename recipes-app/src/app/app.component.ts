@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  page: string = 'recipes'
+
   title = 'recipes-app';
+
+  onRenderedPage(page: string){
+    this.page = page
+  }
 }
