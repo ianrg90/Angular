@@ -1,19 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from './account.service';
+import { Component } from '@angular/core';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  
 })
-export class AppComponent implements OnInit {
-  accounts: {name: string, status: string}[] = []
+export class AppComponent   {
 
-  constructor(private accountService: AccountService){
-  }
-
-  ngOnInit(): void {
-    this.accounts = this.accountService.accounts
-  }
 }
