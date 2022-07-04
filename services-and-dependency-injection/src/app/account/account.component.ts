@@ -9,7 +9,7 @@ import { AccountService } from '../account.service';
   //By not passing the AccountService to the provider we do not create new instances of the class
   //Hence will be the same instance created in the app component
   //providers: [LoginService, AccountService],
-  providers: [LoginService]
+  //providers: [LoginService]
 })
 export class AccountComponent {
   @Input() account: {name: string, status: string};
@@ -22,6 +22,6 @@ export class AccountComponent {
 
   onSetTo(status: string) {
     this.accountService.updateStatus(this.id, status);
-    this.loginService.logStatusChange(status)
+    //this.loginService.logStatusChange(status)
   }
 }

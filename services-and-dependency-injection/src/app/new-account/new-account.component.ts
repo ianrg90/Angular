@@ -9,7 +9,7 @@ import { AccountService } from '../account.service';
   //By not passing the AccountService to the provider we do not create new instances of the class
   //Hence will be the same instance created in the app component
   //providers: [LoginService, AccountService],
-  providers: [LoginService]
+  //providers: [LoginService]
 })
 export class NewAccountComponent {
 
@@ -19,7 +19,7 @@ export class NewAccountComponent {
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountService.addAccount(accountName, accountStatus)
-    this.loginService.logStatusChange(accountStatus)
+    //this.loginService.logStatusChange(accountStatus)
     
     //console.log('A server status changed, new status: ' + accountStatus);
   }
