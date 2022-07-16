@@ -13,5 +13,5 @@ export class Ingredient {
 //Alternative sytax
 
 export class Ingredient {
-    constructor(public name: string, public ammount: number){}
+    constructor(public name: string, public amount: number){}
 }

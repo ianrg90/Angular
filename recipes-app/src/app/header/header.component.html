@@ -15,12 +15,12 @@
       [class.collapse]="collapsed"
       (window:resize)="collapsed = true"
     >
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" >
         <li><a href="#" (click)="onPageRender('recipes')" >Recipes</a></li>
         <li><a href="#"(click)="onPageRender('shoppingList')">Shopping List</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+      <ul class="nav navbar-nav navbar-right" >
+        <li class="dropdown" appDropdown >
           <a href="#" class="dropdown-toggle" role="button"
             >Control <span class="caret"></span
           ></a>
