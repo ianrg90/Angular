@@ -9,13 +9,16 @@ import { Recipe } from '../recipe.model';
 export class RecipesDetailsComponent implements OnInit {
 
   @Input() detailedRecipe: Recipe
- 
+  openDropdown: boolean = false
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  
+  toggleDropdown(){
+    this.openDropdown = !this.openDropdown
+    console.log(this.openDropdown)
+  }
 
 }

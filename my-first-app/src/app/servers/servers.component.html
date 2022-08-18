@@ -1,0 +1,101 @@
+<label for="server">Server Name</label>
+<!--<input
+    name="server"
+    type="text"
+    class="form-control"
+    (input)="getServerName($event)"
+  />-->
+
+<!--TWO WAY DATA BINDING-->
+<input
+  class="form-control"
+  type="text"
+  name="server"
+  [(ngModel)]="serverName"
+/>
+<p>{{ serverName }}</p>
+<button class="btn btn-primary" (click)="enableButton()">
+  Enable server creation
+</button>
+<!--Data binding with PROPERTY BINDING-->
+<button
+  class="btn btn-primary"
+  [disabled]="!allowAddServer"
+  (click)="addServer()"
+>
+  Add server
+</button>
+<!--<p [innerText]="allowAddServer"></p>-->
+<p *ngIf="serverCreated; else noServer">{{ serverCreationStatus }}</p>
+<ng-template #noServer>
+  <p>No server was created</p>
+</ng-template>
+<app-server *ngFor="let server of servers"></app-server>
+
+<!--
+<h1>Challenge 2</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="username">Update username</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control"
+        [(ngModel)]="userName"
+      />
+      <p>{{ userName }}</p>
+      <button
+        class="btn btn-primary"
+        [disabled]="userName === ''"
+        (click)="userName = ''"
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+</div>
+
+-->
+
+<!--
+<h1>Challenge 3</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-primary" (click)="onToggleSecret()">
+        Display details
+      </button>
+      <p *ngIf="showSecret">Secret password = Tuna fish</p>
+      <p
+        [ngStyle]="{ backgroundColor: click > 5 ? 'blue' : null }"
+        [ngClass]="{fiveMore: click > 5}"
+        *ngFor="let click of clicks"
+      >
+        {{ click }}
+      </p>
+    </div>
+  </div>
+</div>
+-->
+
+<h1>Challenge 3 enhanced</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-primary" (click)="onToggleSecret()">
+        Display details
+      </button>
+      <p *ngIf="showSecret">Secret password = Tuna fish</p>
+      <p
+        [ngStyle]="{ backgroundColor: i >= 4 ? 'blue' : null }"
+        [ngClass]="{fiveMore: i >= 4}"
+        *ngFor="let click of clicks; let i = index"
+      >
+        {{ click }}
+      </p>
+    </div>
+  </div>
+</div>
