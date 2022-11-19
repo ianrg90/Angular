@@ -1,0 +1,11 @@
+.container {
+  margin-top: 30px;
+
+  // Taking advantage of classe injected by angular to style invalid && touched input fields
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+}
+
+
