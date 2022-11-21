@@ -1,34 +1,54 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-challenge',
   templateUrl: './form-challenge.component.html',
   styleUrls: ['./form-challenge.component.scss']
 })
-export class FormChallengeComponent  {
+export class FormChallengeComponent implements OnInit {
 
-  @ViewChild('form') formElement: NgForm
-  options = ['Basic', 'Advanced', 'Pro'];
-  selectedOption = 'Advanced';
-  formData = {
-    email: '',
-    subscriptionType: '',
-    password: ''
-  }
-  submitted = false
+  projectForm: FormGroup
+  forbiddenName = 'Test'
+  projectStatuses = ['Stable', 'Critical', 'Finished']
 
+  constructor() { }
 
-  submitForm(){
-    this.submitted = true
-    
-    this.formData.email = this.formElement.value.email
-    this.formData.subscriptionType = this.formElement.value.subscriptionType
-    this.formData.password = this.formElement.value.password
+  ngOnInit(): void {
 
-    this.formElement.reset()
+    this.projectForm = new FormGroup({
+      //@ts-ignore
+      'projectName' : new FormControl(null, Validators.required, this.asyncForbiddenName.bind(this)),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'projectStatus': new FormControl('Critical')
+    })
   }
 
-  
+  // checkForbiddenName(control: FormControl) : {[s: string]: boolean} | null {
+  //   if(control.value === this.forbiddenName) {
+  //     return {'nameIsForbidden' : true}
+  //   }
+  //   return null
+  // }
+
+  //async validator
+
+  asyncForbiddenName(control: FormControl): Promise<any> | Observable<any>{
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if(control.value === this.forbiddenName){
+          resolve({'nameIsForbidden': true})
+        }else
+        resolve(null)
+      }, 1500)
+    })
+
+    return promise
+  }
+
+  onSubmit(){
+    console.log(this.projectForm)
+  }
 
 }

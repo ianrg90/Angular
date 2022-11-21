@@ -1,68 +1,89 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  genders: string[] = ['Male', 'Female'];
+  signupForm: FormGroup;
+  forbiddenUserNames : string[] = ['Chris', 'Anna'];
 
-  //Fix anoying ts error of not initializing prop "!"
-  @ViewChild('f') signupForm!: NgForm;
-  defaultQuestion = 'pet';
-  answer : "";
-  genders = ['Male','Female'];
-  user = {
-    username : '',
-    email: '',
-    secretQuestion: '',
-    answer: '',
-    gender: '',
+  constructor(private formBuilder : FormBuilder){
+    
   }
-  submitted = false
 
-  suggestUserName() {
-    const suggestedName = 'Superuser';
 
-    // This approach will override all fields case you just want to fill username and already have other fields completed
+  ngOnInit () {
 
-    // this.signupForm.setValue({
-    //   userData: {
-    //     username: suggestedName,
-    //     email: ''
-    //   },
-    //   secret: 'teacher',
-    //   questionAnswer: 'Control the form by passing the object exact like the form object structure',
-    //   gender: 'Male'
+    this.signupForm = new FormGroup({
+      // Just reference the validators , do not call then
+      'userData' : new FormGroup({
+        'username': new FormControl(null,[ Validators.required, this.forbiddenNames.bind(this)]),//Bind custom validator here
+        //@ts-ignore
+        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails), //Third argument is for the async validators, Can`t figure out error, works with ts-ignore
+      }),
+      'gender': new FormControl('Male'),
+      'hobbies': new FormArray([])
+    })
+
+    // this.signupForm.valueChanges.subscribe((value) => {
+    //   console.log(value)
     // })
 
-    // This one will target only username field
+    // this.signupForm.statusChanges.subscribe((value) => {
+    //   console.log(value)
+    // })
 
-    this.signupForm.form.patchValue({
-      userData: {
-        username: suggestedName
-      }
-    })
+    // this.signupForm.setValue({
+    //   'userData': {
+    //     'username': 'Ian',
+    //     'email': 'ian@halaxy.com'
+    //   },
+    //   'gender': 'Male',
+    //   'hobbies': []
+    // })
   }
 
-
-  //Approach using ANGULAR FORM HANDLING
-  // onSubmit(form : NgForm) {
-  //   console.log(form)
-  // }
-
   onSubmit(){
+    console.log(this.signupForm)  
 
-    this.submitted = true
-
-    this.user.username = this.signupForm.value.userData.username;
-    this.user.email = this.signupForm.value.userData.email;
-    this.user.secretQuestion = this.signupForm.value.secret;
-    this.user.answer = this.signupForm.value.questionAnswer;
-    this.user.gender = this.signupForm.value.gender;
-
-    // You can pass a object like done in setValue() above to reset the fields to desired values if you want
     this.signupForm.reset()
+  }
+
+  onAddHobbie(){
+    
+    (<FormArray>this.signupForm.get('hobbies')).push(new FormControl(null, Validators.required))
+  }
+
+  getControls(){
+    return (<FormArray>this.signupForm.get('hobbies')).controls 
+  }
+
+//Custom validator for username field
+  forbiddenNames(control: FormControl):{[s: string]: boolean} | null {  
+    if(this.forbiddenUserNames.indexOf(control.value) !== -1){
+      return {'nameIsForbidden' : true}
+    }
+    return null
+  }
+
+  //Async validator in case you need to make a request to validate
+
+  forbiddenEmails(control: FormControl) : Promise<any> | Observable<any>{
+      const promise = new Promise<any>((resolve, reject) => {
+        setTimeout(() => {
+            if(control.value === "test@test.com"){
+              resolve({'emailIsForbidden': true})
+            }else {
+              resolve(null)
+            }
+        }, 1500)
+      })
+
+      return promise
   }
 }
