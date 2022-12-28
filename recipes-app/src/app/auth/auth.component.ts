@@ -67,6 +67,7 @@ export class AuthComponent implements OnDestroy {
     this.error = null
   }
 
+  //This approach should not be used. Use ngIf instead. Just use this if you have a strong reason to do so
   private showErrorAlert(message: string) {
     // Valid ts syntax however won`t work because Angular needs more 
     // const alertCmp = new AlertComponent()
