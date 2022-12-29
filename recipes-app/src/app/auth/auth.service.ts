@@ -5,6 +5,7 @@ import { throwError, Subject } from 'rxjs';
 import { User } from './user.model';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponseData {
   idToken: string;
@@ -26,7 +27,6 @@ export interface LocalStorageAuthData {
   providedIn: 'root',
 })
 export class AuthService {
-  apiKey = 'AIzaSyDBJT7tC7_zJ9dxgoYq1UJE0W34U0d2sIM';
   //Like subject but we can get access even if the user loged before that point of time 
   user = new BehaviorSubject<User>(null);
   tokenExpirationTimer : any;
@@ -75,7 +75,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-          this.apiKey,
+          environment.firebaseApiKey,
         {
           email,
           password,
@@ -101,7 +101,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-          this.apiKey,
+        environment.firebaseApiKey,
         {
           email,
           password,
